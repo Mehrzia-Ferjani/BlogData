@@ -1,0 +1,64 @@
+<div style="background-color: whitesmoke; border-radius: 10px">
+  <mat-toolbar>
+    <h2><a style="text-decoration: none">Technical test</a></h2>
+    <span class="example-spacer"></span>
+    <button
+      mat-raised-button
+      style="background-color: red"
+      routerLink="/addBlog"
+    >
+      Add Blog
+    </button>
+  </mat-toolbar>
+</div>
+<hr />
+
+<div class="row">
+  <div class="col-md-3">
+    <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Search blogs">
+  </div>
+</div>
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-4" *ngFor="let blog of blogs.blogs">
+      <mat-card
+        class="blog-card"
+        [ngClass]="{
+          'green-border': blog.upvotes > blog.downvotes,
+          'red-border': blog.upvotes < blog.downvotes
+        }"
+      >
+        <mat-card-header>
+          <h1>Title: {{ blog.title }}</h1>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            {{ blog.content | slice : 0 : 50 }}...
+            <a [routerLink]="['/blogDetails', blog.id]">Continue reading</a>
+          </p>
+        </mat-card-content>
+        <mat-card-actions class="votes">
+          <button
+            mat-raised-button
+            style="background-color: green"
+            (click)="upvote(blog)"
+          >
+            Upvote ({{ blog.upvotes }})
+          </button>
+          <button
+            mat-raised-button
+            style="background-color: red"
+            (click)="downvote(blog)"
+          >
+            Downvote ({{ blog.downvotes }})
+          </button>
+        </mat-card-actions>
+        <mat-card-footer>
+          <h3>Author: {{ blog.author }}</h3>
+        </mat-card-footer>
+      </mat-card>
+    </div>
+  </div>
+</div>
